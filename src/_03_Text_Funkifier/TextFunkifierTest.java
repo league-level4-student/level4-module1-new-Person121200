@@ -43,7 +43,8 @@ public class TextFunkifierTest {
      */
 
     @Test
-    public void testCustomString() {
-
+    public void testNumberString() {
+    	NumberString ns = new NumberString("I am skibidi");
+    	assertEquals("I9 a1m13 s19k11i9b2i9d4i9", ns.funkifyText());
     }
 }
