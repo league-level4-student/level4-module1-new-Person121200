@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,13 +55,13 @@ import javax.swing.Timer;
 
 public class PolymorphWindow extends JPanel implements ActionListener {
 
-    public static final int WIDTH = 900;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 500;
+    public static final int HEIGHT = 500;
 
     private JFrame window;
     private Timer timer;
+    ArrayList<Polymorph> polyarray = new ArrayList<>();
 
-    Polymorph bluePoly;
 
     public static void main(String[] args) {
         new PolymorphWindow().buildWindow();
@@ -69,12 +70,14 @@ public class PolymorphWindow extends JPanel implements ActionListener {
     public void buildWindow() {
         window = new JFrame("IT'S MORPHIN' TIME!");
         window.add(this);
-        window.getContentPane().setPreferredSize(new Dimension(500, 500));
+        window.getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.pack();
         window.setVisible(true);
 
-        bluePoly = new BluePolymorph(50, 50);
+        polyarray.add(new BluePolymorph(50, 50, 50, 50));
+        polyarray.add(new RedPolymorph(200, 200, 50, 50));
+        polyarray.add(new MovingMorph(500, 500, 50, 50));
 
         timer = new Timer(1000 / 30, this);
         timer.start();
@@ -84,15 +87,16 @@ public class PolymorphWindow extends JPanel implements ActionListener {
         // draw background
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(0, 0, 500, 500);
-
-        // draw polymorph
-        bluePoly.draw(g);
+        for(Polymorph p : polyarray) {
+        	p.draw(g);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
-        bluePoly.update();
-
+        for(Polymorph p : polyarray) {
+        	p.update();
+        }
     }
 }
